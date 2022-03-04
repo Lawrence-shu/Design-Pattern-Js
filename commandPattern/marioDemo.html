@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    canvas {
+      border: 1px solid gray;
+    }
+    .btn-row {
+      width: 400px;
+      display: flex;
+      justify-content: space-around;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <div class="btn-row">
+    <button id='up-btn'>up</button>
+    <button id='down-btn'>down</button>
+    <button id='left-btn'>left</button>
+    <button id='right-btn'>right</button>
+  </div>
+  <script>
+    const container = document.getElementById('container')
+    const canvas = document.createElement('canvas')
+    canvas.setAttribute('id', 'my-canvas')
+    container.appendChild(canvas)
+    const CanvasWidth = 400    // 画布宽度
+    const CanvasHeight = 400   // 画布高度
+    const CanvasStep = 40      // 动作步长
+    canvas.width = CanvasWidth
+    canvas.height = CanvasHeight
+    const btnUp = document.getElementById('up-btn')
+    const btnDown = document.getElementById('down-btn')
+    const btnLeft = document.getElementById('left-btn')
+    const btnRight = document.getElementById('right-btn')
+  </script>
+  <script src="./commandPattern.js"></script>
+  <!-- <script>
+    // 非命令模式
+    const mario = new Role(200, 200, './assets/mario.jpg')
+
+    btnUp.onclick = function() {
+      mario.move(0, -CanvasStep)
+    }
+
+    btnDown.onclick = function() {
+      mario.move(0, CanvasStep)
+    }
+
+    btnLeft.onclick = function() {
+      mario.move(-CanvasStep, 0)
+    }
+
+    btnRight.onclick = function() {
+      mario.move(CanvasStep, 0)
+    }
+  </script> -->
+  <script>
+    /**
+     * 命令模式
+     */ 
+
+    // 执行者
+    const mario = new Role(200, 200, './assets/mario.jpg')
+
+    // 命令
+    const moveUpCommand = new MoveUpCommand(mario)
+    const moveDownCommand = new MoveDownCommand(mario)
+    const moveLeftCommand = new MoveLeftCommand(mario)
+    const moveRightCommand = new MoveRightCommand(mario)
+
+    // 按钮是命令的发布者
+    setCommand(btnUp, moveUpCommand)
+    setCommand(btnDown, moveDownCommand)
+    setCommand(btnLeft, moveLeftCommand)
+    setCommand(btnRight, moveRightCommand)
+    setCommand(btnUp, moveRightCommand)
+  </script>
+</body>
+</html>
